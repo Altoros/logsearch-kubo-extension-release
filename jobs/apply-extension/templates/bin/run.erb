@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+TIMEOUT=<%=p("timeout-sec")%>
+
+main() {
+  if timeout "$TIMEOUT" /var/vcap/jobs/apply-extension/bin/deploy-extension
+  then
+    echo "all expected specs are running"
+  else
+    echo "failed to start specs after $TIMEOUT with exit code $?"
+    exit 1
+  fi
+}
+
+main

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -e
+
+spec_dir="/var/vcap/jobs/apply-extension/specs"
+config_dir="/var/vcap/jobs/apply-extension/config"
+
+kubectl="/var/vcap/packages/kubectl/bin/kubectl --kubeconfig=/var/vcap/jobs/apply-extension/config/kubeconfig"
+
+apply_spec() {
+  local spec_file="${spec_dir}/${1}"
+  echo "Deploying $spec_file"
+  ${kubectl} apply -f "${spec_file}"
+}
+
+wait_for() {
+  ${kubectl} rollout status "daemonsets/${1}" -w --namespace=kube-system
+}
+
+main() {
+  apply_spec "fluentd.yml"
+  wait_for fluentd
+}
+
+main

@@ -1,0 +1,5 @@
+---
+name: kubectl
+
+files:
+  - kubectl/kubectl-amd64-v1.10.2

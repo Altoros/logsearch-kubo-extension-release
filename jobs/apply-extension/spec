@@ -1,0 +1,43 @@
+---
+name: apply-extension
+
+templates:
+  bin/deploy-extension.erb: bin/deploy-extension
+  bin/run.erb: bin/run
+  config/ca.pem.erb: config/ca.pem
+  config/kubeconfig.erb: config/kubeconfig
+  specs/fluentd.yml.erb: specs/fluentd.yml
+
+packages:
+  - kubectl
+
+consumes:
+  - name: elasticsearch
+    type: elasticsearch
+    optional: true
+  - name: kube-apiserver
+    type: kube-apiserver
+    optional: true
+
+properties:
+  authorization-mode:
+    description: The authorization mode for kube-apiserver. Should be 'abac' or 'rbac'
+    default: rbac
+  admin-username:
+    description: The admin username for the Kubernetes cluster
+  admin-password:
+    description: The password for the admin account
+  kubernetes.host:
+    description: "Hostname for the Kubernetes master"
+  kubernetes.port:
+    description: "Port for the Kubernetes master"
+  kubernetes.ca:
+    description: "CA Certificate for the Kubernetes master"
+  timeout-sec:
+    description: Timeout for system spec deployment
+    default: 1200
+  elasticsearch.host:
+    description: 'IP or hostname of the elasticsearch master node'
+  elasticsearch.port:
+    description: 'Port of the elasticsearch master node'
+    default: 9200

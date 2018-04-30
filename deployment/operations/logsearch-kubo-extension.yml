@@ -1,0 +1,21 @@
+---
+- type: replace
+  path: /instance_groups/name=maintenance/jobs/-
+  value:
+    name: apply-extension
+    release: logsearch-kubo-extension
+    consumes:
+      elasticsearch: {from: elasticsearch_master}
+    properties:
+      admin-username: ((kubo_admin_username))
+      admin-password: ((kubo_admin_password))
+      kubernetes:
+        host: ((kubo_host))
+        port: ((kubo_port))
+        ca: ((kubo_ca_cert))
+
+- type: replace
+  path: /releases/-
+  value:
+    name: logsearch-kubo-extension
+    version: "latest"

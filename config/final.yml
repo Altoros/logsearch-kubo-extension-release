@@ -1,0 +1,6 @@
+---
+blobstore:
+  provider: s3
+  options:
+    bucket_name: logsearch-kubo-extension-assets
+name: logsearch-kubo-extension
